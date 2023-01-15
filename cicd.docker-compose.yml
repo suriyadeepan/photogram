@@ -6,7 +6,7 @@ services:
     build:
       context: ./nginx-custom/
       dockerfile: ./nginx-custom/aws.Dockerfile
-    posrts:
+    ports:
       - 80:80
       - 443:443
     restart: "no"
