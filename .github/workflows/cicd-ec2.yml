@@ -25,8 +25,8 @@ jobs:
         run: |
           docker-compose -f "cicd.docker-compose.yml" up --build --no-start
           # docker build -t $REPO . 
-          docker tag $REPO_PHOTOGRAM:latest ${{secrets.DOCKER_USER}}/$REPO_PHOTOGRAM:latest
-          docker tag $REPO_NGINX:latest ${{secrets.DOCKER_USER}}/$REPO_NGINX:latest
+          # docker tag $REPO_PHOTOGRAM:latest ${{secrets.DOCKER_USER}}/$REPO_PHOTOGRAM:latest
+          # docker tag $REPO_NGINX:latest ${{secrets.DOCKER_USER}}/$REPO_NGINX:latest
           docker push ${{secrets.DOCKER_USER}}/$REPO_PHOTOGRAM
           docker push ${{secrets.DOCKER_USER}}/$REPO_NGINX
           
