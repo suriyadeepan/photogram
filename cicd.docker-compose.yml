@@ -19,7 +19,6 @@ services:
     # image: suriyadeepan/photogram
     build:
       context: ./photogram/
-      dockerfile: ./photogram/Dockerfile
     ports:
       - 5000:5000
     restart: "no"
