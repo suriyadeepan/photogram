@@ -22,7 +22,7 @@ jobs:
         env:
           REPO: photogram
         run: |
-          docker-compose -f "aws.docker-compose.yml" up -d --build --no-start
+          docker-compose -f "cicd.docker-compose.yml" up -d --build --no-start
           docker build -t $REPO . 
           docker tag $REPO:latest ${{secrets.DOCKER_USER}}/$REPO:latest
           docker push ${{secrets.DOCKER_USER}}/$REPO
