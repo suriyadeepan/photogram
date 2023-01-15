@@ -1,0 +1,49 @@
+name: ci/cd
+
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run:
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      
+      - name: Docker Push
+        env:
+          REPO: photogram
+        run: |
+          docker-compose -f "aws.docker-compose.yml" up -d --build --no-start
+          docker build -t $REPO . 
+          docker tag $REPO:latest ${{secrets.DOCKER_USER}}/$REPO:latest
+          docker push ${{secrets.DOCKER_USER}}/$REPO
+          
+      - name: Docker pull & Run from hub
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          REPO: photogram
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username: ec2-user
+          key: ${{secrets.EC2_PRIVATE_KEY}}
+          port: 22
+          envs:
+            DOCKER_USER, REPO
+          script: |
+            # docker login -u="${{secrets.DOCKER_USER}}" -p="${{secrets.DOCKER_PASSWORD}}"
+            docker pull $DOCKER_USER/$REPO
+            docker stop $(docker ps -a -q)
+            docker rm $(docker ps -a -q)
+            # docker run -d -p 80:5000 $DOCKER_USER/$REPO
+            docker-compose -f "photogram/aws.docker-compose.yml" up -d
