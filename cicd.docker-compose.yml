@@ -10,8 +10,8 @@ services:
       - 80:80
       - 443:443
     restart: "no"
-    depends_on:
-      - photogram
+    # depends_on:
+    #   - photogram
     # volumes:
     #   - /home/ec2-user/.certs/privkey.pem:/etc/nginx/certs/privkey.pem
     #   - /home/ec2-user/.certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
