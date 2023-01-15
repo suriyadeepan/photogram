@@ -2,8 +2,10 @@ version: "3.9"
 # define various services
 services:
   nginx-custom:
-    image: suriyadeepan/nginx-custom
-    dockerfile: nginx-custom/aws.Dockerfile
+    # image: suriyadeepan/nginx-custom
+    build:
+      context: ./nginx-custom/
+      dockerfile: ./nginx-custom/aws.Dockerfile
     posrts:
       - 80:80
       - 443:443
@@ -14,7 +16,10 @@ services:
     #   - /home/ec2-user/.certs/privkey.pem:/etc/nginx/certs/privkey.pem
     #   - /home/ec2-user/.certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
   photogram:
-    image: suriyadeepan/photogram
+    # image: suriyadeepan/photogram
+    build:
+      context: ./photogram/
+      dockerfile: ./photogram/Dockerfile
     ports:
       - 5000:5000
     restart: "no"
