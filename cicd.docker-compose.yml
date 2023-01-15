@@ -5,7 +5,7 @@ services:
     # image: suriyadeepan/nginx-custom
     build:
       context: ./nginx-custom/
-      dockerfile: ./nginx-custom/aws.Dockerfile
+      dockerfile: aws.Dockerfile
     ports:
       - 80:80
       - 443:443
