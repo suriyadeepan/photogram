@@ -1,0 +1,31 @@
+version: "3.9"
+# define various services
+services:
+  nginx-custom:
+    image: suriyadeepan/nginx-custom
+    dockerfile: nginx-custom/aws.Dockerfile
+    posrts:
+      - 80:80
+      - 443:443
+    restart: "no"
+    depends_on:
+      - photogram
+    # volumes:
+    #   - /home/ec2-user/.certs/privkey.pem:/etc/nginx/certs/privkey.pem
+    #   - /home/ec2-user/.certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
+  photogram:
+    image: suriyadeepan/photogram
+    ports:
+      - 5000:5000
+    restart: "no"
+#     volumes:
+#       - /home/ec2-user/.db/voting.db:/app/voting.db:rw
+#     secrets:
+#       - secure_key
+#       - config_file
+
+# secrets:
+#   secure_key:
+#     file: /home/ec2-user/.secrets/google-api-key.json
+#   config_file:
+#     file: /home/ec2-user/photogram/aws.config.json
