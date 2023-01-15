@@ -20,18 +20,22 @@ jobs:
       
       - name: Docker Push
         env:
-          REPO: photogram
+          REPO_PHOTOGRAM: photogram
+          REPO_NGINX: nginx-custom
         run: |
           docker-compose -f "cicd.docker-compose.yml" up --build --no-start
-          docker build -t $REPO . 
-          docker tag $REPO:latest ${{secrets.DOCKER_USER}}/$REPO:latest
-          docker push ${{secrets.DOCKER_USER}}/$REPO
+          # docker build -t $REPO . 
+          docker tag $REPO_PHOTOGRAM:latest ${{secrets.DOCKER_USER}}/$REPO_PHOTOGRAM:latest
+          docker tag $REPO_NGINX:latest ${{secrets.DOCKER_USER}}/$REPO_NGINX:latest
+          docker push ${{secrets.DOCKER_USER}}/$REPO_PHOTOGRAM
+          docker push ${{secrets.DOCKER_USER}}/$REPO_NGINX
           
       - name: Docker pull & Run from hub
         env:
           DOCKER_USER: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-          REPO: photogram
+          REPO_NGINX: nginx-custom
+          REPO_PHOTOGRAM: photogram
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.EC2_HOST}}
@@ -39,10 +43,11 @@ jobs:
           key: ${{secrets.EC2_PRIVATE_KEY}}
           port: 22
           envs:
-            DOCKER_USER, REPO
+            DOCKER_USER, REPO_PHOTOGRAM, REPO_NGINX
           script: |
             # docker login -u="${{secrets.DOCKER_USER}}" -p="${{secrets.DOCKER_PASSWORD}}"
-            docker pull $DOCKER_USER/$REPO
+            docker pull $DOCKER_USER/$REPO_PHOTOGRAM
+            docker pull $DOCKER_USER/$REPO_NGINX
             docker stop $(docker ps -a -q)
             docker rm $(docker ps -a -q)
             # docker run -d -p 80:5000 $DOCKER_USER/$REPO
