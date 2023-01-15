@@ -1,0 +1,8 @@
+SQLAlchemy
+oauth2client
+google-api-python-client
+Flask
+Flask-Session
+Flask-SQLAlchemy
+argparse
+gunicorn
