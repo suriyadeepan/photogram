@@ -2,7 +2,7 @@ version: "3.9"
 # define various services
 services:
   nginx-custom:
-    # image: suriyadeepan/nginx-custom
+    image: suriyadeepan/nginx-custom
     build:
       context: ./nginx-custom/
       dockerfile: aws.Dockerfile
@@ -16,7 +16,7 @@ services:
     #   - /home/ec2-user/.certs/privkey.pem:/etc/nginx/certs/privkey.pem
     #   - /home/ec2-user/.certs/fullchain.pem:/etc/nginx/certs/fullchain.pem
   photogram:
-    # image: suriyadeepan/photogram
+    image: suriyadeepan/photogram
     build:
       context: ./photogram/
     ports:
