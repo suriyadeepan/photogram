@@ -1,12 +1,12 @@
 .conbg {
-    width: 100%;
+    width: 800px;
     height: 90vh;
   }
   .bg2 {
     z-index: 2;
     position: relative;
     width: 75%;
-    height: 700px;
+    height: 550px;
     margin: 100px auto;
     transform: rotate(10deg);
     background-repeat: no-repeat;
@@ -28,7 +28,7 @@
     background-position: right -70px;
     background-color: #000000;
     box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.5);
-    height: 700px;
+    height: 550px;
     image-rendering: smooth;
   }
   .bg {
@@ -36,7 +36,7 @@
     position: relative;
     margin: auto;
     transform: rotate(-5deg);
-    height: 700px;
+    height: 550px;
     background-repeat: no-repeat;
     /* background-image: url(https://drive.google.com/uc?export=view&id=1toswxFGdQovJ-0xuHaRPuvpyHQWLNMm1); */
     background-size: cover;
@@ -121,13 +121,32 @@ body {
 
 @media only screen and (max-width: 576px) {
   .bg2 {
-    height: 50vh;
+    height: 300px;
   }
   .bg1 {
-    height: 50vh;
+    height: 300px;
   }
   .bg {
-    height: 50vh;
+    height: 300px;
+  }
+  .conbg {
+    width: 400px;
   }
   
 }
+/* 
+@media only screen and (max-width: 950px) and (min-width: 577px)  {
+  .bg2 {
+    height: 170px;
+  }
+  .bg1 {
+    height: 170px;
+  }
+  .bg {
+    height: 170px;
+  }
+  .conbg {
+    width: 400px;
+    
+  }  
+} */
