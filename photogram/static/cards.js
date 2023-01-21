@@ -67,23 +67,27 @@ var requestNextImage = (bgidx, btnIndex) => {
     url: "/next-meta",
     type: "GET",
     success: (data) => {
-      image_url = `https://drive.google.com/uc?export=view&id=${data.src}`;
-      console.log(image_url);
       let ratio = parseInt(data.width) / parseInt(data.height);
       let containerDims = calculateContainerDims(
         ratio,
         screen.height,
         screen.width
       );
-      $(`#${bgidx}`).css("background-image", `url(${image_url})`);
+      
       if (screen.width > 576) {
-        $(`#${bgidx}`).css("height", `${containerDims.height - 50}px`);
+        let h = containerDims.height - 50;
+        $(`#${bgidx}`).css("height", `${h}px`);
+        let image_url = `https://drive.google.com/thumbnail?authuser=0&sz=h${2*h}&id=${data.src}`;
+        $(`#${bgidx}`).css("background-image", `url(${image_url})`);
       } else {
         let height = Math.min(containerDims.height, 350)
         $(`#${bgidx}`).css("height", height);
         let width = Math.min(containerDims.width, 320)
         $(`#${bgidx}`).css("width", `${width}px`);
+        let image_url = `https://drive.google.com/thumbnail?authuser=0&sz=w${2*width}&id=${data.src}`;
+        $(`#${bgidx}`).css("background-image", `url(${image_url})`);
       }
+      
       // $(`#${bgidx}`).css("width", `${containerDims.width}px`);
       // $(`#${bgidx}`).css("height", data.height);
       // $(`#${bgidx}`).css("width", data.width);
