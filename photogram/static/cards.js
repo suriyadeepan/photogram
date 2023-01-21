@@ -1,4 +1,22 @@
 /** @format */
+var calculateContainerDims = (ratio, maxWidth) => {
+  let h, w;
+  if (maxWidth > 500) {
+    // pc/tab device
+    h = 600; // fix height
+    w = ratio * h; // infer width
+  } else {
+    // mobile device
+    w = 275; // fix width
+    h = w / ratio; // infer height
+  }
+  return {
+    width: w,
+    height: h,
+  };
+};
+
+
 window.onload = () => {
   // The dummy class about to be inserted will be removed and replaced
   // by image id at the end of the ajax call
@@ -51,7 +69,24 @@ var requestNextImage = (bgidx, btnIndex) => {
     success: (data) => {
       image_url = `https://drive.google.com/uc?export=view&id=${data.src}`;
       console.log(image_url);
+      let ratio = parseInt(data.width) / parseInt(data.height);
+      let containerDims = calculateContainerDims(
+        ratio,
+        screen.height,
+        screen.width
+      );
       $(`#${bgidx}`).css("background-image", `url(${image_url})`);
+      if (screen.width > 576) {
+        $(`#${bgidx}`).css("height", `${containerDims.height - 50}px`);
+      } else {
+        let height = Math.min(containerDims.height, 350)
+        $(`#${bgidx}`).css("height", height);
+        let width = Math.min(containerDims.width, 320)
+        $(`#${bgidx}`).css("width", `${width}px`);
+      }
+      // $(`#${bgidx}`).css("width", `${containerDims.width}px`);
+      // $(`#${bgidx}`).css("height", data.height);
+      // $(`#${bgidx}`).css("width", data.width);
       // using btnIndex to get the button because
       // $('#bg2 button'), $('#bg1 button'), $('#bg2 button')
       // all return the same element => $('button')[0]
