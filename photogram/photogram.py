@@ -160,7 +160,7 @@ def init_db(images, image_metadata):
 
 
 # create a list of image urls
-images = [f["id"] for f in get_image_list_meta()[25:]]
+images = [f["id"] for f in get_image_list_meta()]
 image_metadata = get_image_metadata(images)
 # initialize database
 with app.app_context():
