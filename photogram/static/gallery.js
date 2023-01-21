@@ -87,7 +87,7 @@ window.onload = () => {
   console.log("Placing an AJAX call to the server!");
   // get topk images from db
   $.ajax({
-    url: "/topk/10",
+    url: "/topk/20",
     type: "GET",
     success: (data) => {
       console.log("we got the data!");
@@ -95,7 +95,7 @@ window.onload = () => {
       var galleryElement = $(".gallery")[0];
       data.forEach((x, i) => {
         // create elementcaption,
-        var imageSrc = `https://drive.google.com/uc?export=view&id=${x.file_id}`;
+        var imageSrc = `https://drive.google.com/thumbnail?authuser=0&sz=h${1000}&id=${x.file_id}`;
         var elem = document.createElement("a");
         elem.innerHTML = `<img src="${imageSrc}" alt="${x.votes} Likes" /></a>`;
         // attach to parent
