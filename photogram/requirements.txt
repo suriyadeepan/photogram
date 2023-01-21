@@ -6,3 +6,4 @@ Flask-Session
 Flask-SQLAlchemy
 argparse
 gunicorn
+tqdm
